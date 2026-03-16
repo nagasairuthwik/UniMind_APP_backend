@@ -20,7 +20,6 @@ import smtplib
 import ssl
 from datetime import datetime, timedelta
 from flask import Flask, request, jsonify, g, send_from_directory
-from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from config import Config
 
@@ -32,7 +31,6 @@ except ImportError:
     raise
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Profile photo uploads (created on first upload)
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "uploads")
