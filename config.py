@@ -30,6 +30,7 @@ class Config:
     MYSQL_USER = os.environ.get("MYSQL_USER") or "root"
     MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD") or ""
     MYSQL_DB = os.environ.get("MYSQL_DB") or "unimind"
+    MYSQL_DB = os.environ.get("MYSQL_DB") or "unimind_website"
     MYSQL_CURSORCLASS = "DictCursor"
 
     # -----------------------------
