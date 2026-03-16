@@ -29,9 +29,7 @@ class Config:
     MYSQL_HOST = os.environ.get("MYSQL_HOST") or "localhost"
     MYSQL_USER = os.environ.get("MYSQL_USER") or "root"
     MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD") or ""
-    # Default DB now points to the UniMind website database.
-    # App and website will both use this unless MYSQL_DB env var overrides it.
-    MYSQL_DB = os.environ.get("MYSQL_DB") or "unimind_website"
+    MYSQL_DB = os.environ.get("MYSQL_DB") or "unimind"
     MYSQL_CURSORCLASS = "DictCursor"
 
     # -----------------------------
