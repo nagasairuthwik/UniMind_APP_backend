@@ -45,24 +45,19 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 gemini_model = None
 
 def get_gemini_model():
-    """Lazy‑init Gemini model using API key from Config."""
+    """Lazy‑init Gemini model using API keys from api_server/.env (GEMINI_API_KEY or GEMINI_API_KEYS)."""
     global gemini_model
     if gemini_model is not None:
         return gemini_model
     if genai is None:
         raise RuntimeError("google-generativeai not installed. Run: pip install google-generativeai")
-    # Use your 6 UniMind keys; environment key can override if set.
-    default_keys = [
-        "AIzaSyD7WHTfTUCD8QhTX4fWds-vn4fIclmtO8g",
-        "AIzaSyBOhN7Ho5M_wyv-8zJjeryX_rm74hSNx6Y",
-        "AIzaSyBRmYoTciafmYmh4KEDhT1qpwGbpnDrYf0",
-        "AIzaSyBZXkBgOKfATL6gh-O3Y_lNynkLPY5PydA",
-        "AIzaSyAtIpkWZo9WUthvoVwmyQTG4xsB_Vv92LQ",
-        "AIzaSyCg0iojTkl-8JVVRYVGvuFGSugdASkAPLE",
-    ]
-    api_key = Config.GEMINI_API_KEY or (default_keys[0] if default_keys else None)
+    candidates = Config.gemini_api_key_candidates()
+    api_key = candidates[0] if candidates else None
     if not api_key:
-        raise RuntimeError("No Gemini API key configured.")
+        raise RuntimeError(
+            "No Gemini API key configured. Set GEMINI_API_KEY or GEMINI_API_KEYS in api_server/.env "
+            "(see .env.example)."
+        )
     genai.configure(api_key=api_key)
     gemini_model = genai.GenerativeModel("gemini-2.5-flash")
     return gemini_model
